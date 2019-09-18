@@ -1,0 +1,45 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: php-example-service
+  namespace: kim
+spec:
+  selector:
+    app: php-example
+  type: NodePort
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 30001
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: php-example
+  labels:
+    app: php-example
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: php-example
+  template:
+    metadata:
+      labels:
+        app: php-example
+    spec:
+      containers:
+      - name: nginx-log-demo
+        image: registry.cn-hangzhou.aliyuncs.com/jdb-internet/tradeui-php:${CICD_GIT_TAG}
+        ports:
+        - containerPort: 80
+        command: ["/bin/sh","-c","sleep 3600"]
+        volumeMounts:
+        - name: nginx-log
+          mountPath: /var/log/ngin
+      - name: nginx-log-demo-2
+        image: registry.cn-hangzhou.aliyuncs.com/log-service/docker-log-test:latest
+        command: ["/bin/sh","-c","sleep 3600"]
+        volumeMounts:
+        - name: nginx-log
+          mountPath: /var/log/ngin
