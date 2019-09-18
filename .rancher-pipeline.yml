@@ -1,0 +1,20 @@
+stages:
+- name: pull code
+  steps:
+  - runScriptConfig:
+      image: registry.yz-dev-rrcloud.priv/centos:7.6.1810
+      shellScript: echo "hello"
+- name: push image
+  steps:
+  - publishImageConfig:
+      dockerfilePath: ./Dockerfile
+      buildContext: .
+      tag: registry.yz-dev-rrcloud.priv/jdb-internet/tradeui-php:${CICD_GIT_TAG}
+      pushRemote: true
+      registry: 100.73.18.129
+- name: deploy
+  steps:
+  - applyYamlConfig:
+      path: ./deployment.yaml
+timeout: 60
+notification: {}
