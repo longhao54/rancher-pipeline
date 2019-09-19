@@ -5,9 +5,7 @@ stages:
       image: registry.yz-dev-rrcloud.priv/centos:7.6.1810
       shellScript: echo "hello"
     when:
-      event:
-        include:
-        - tag
+      event: {}
 - name: push image
   steps:
   - publishImageConfig:
@@ -17,17 +15,13 @@ stages:
       pushRemote: true
       registry: 100.73.18.129
     when:
-      event:
-        include:
-        - tag
+      event: {}
 - name: deploy
   steps:
   - applyYamlConfig:
       path: ./deployment.yaml
     when:
-      event:
-        include:
-        - tag
+      event: {}
 timeout: 60
 branch:
   include:
