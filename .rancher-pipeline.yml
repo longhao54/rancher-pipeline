@@ -29,4 +29,7 @@ stages:
         include:
         - tag
 timeout: 60
+branch:
+  include:
+  - master
 notification: {}
