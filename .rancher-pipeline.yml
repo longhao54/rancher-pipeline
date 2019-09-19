@@ -11,7 +11,7 @@ stages:
   - publishImageConfig:
       dockerfilePath: ./Dockerfile
       buildContext: .
-      tag: registry.yz-dev-rrcloud.priv/jdb-internet/tradeui-php:${CICD_GIT_TAG}
+      tag: registry.yz-dev-rrcloud.priv/jdb-internet/tradeui-php:v1
       pushRemote: true
       registry: 100.73.18.129
     when:
